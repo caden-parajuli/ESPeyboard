@@ -26,7 +26,7 @@
             #   rev = "release/v5.4";
             #   sha256 = "sha256-308d0gaHH9WiRawiPC3TKne6T+P1AZUA25OXO53WFtc=";
             # })
-            esp32s3-idf
+            esp-idf-esp32s3
             python312Packages.psutil
           ];
         };
