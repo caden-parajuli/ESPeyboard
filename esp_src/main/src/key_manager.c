@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdlib.h>
 #include "esp_log.h"
 #include "tinyusb.h"
@@ -49,11 +50,23 @@ void dequeue_key(uint8_t keycode) {
 }
 
 void send_report(void) {
-    ESP_LOGI(TAG, "Sending Keyboard report {%i, %i, %i, %i, %i, %i}", pressed_keys[0], pressed_keys[1], pressed_keys[2],
-             pressed_keys[3], pressed_keys[4], pressed_keys[5]);
+    // ESP_LOGI(TAG, "Sending Keyboard report {%i, %i, %i, %i, %i, %i}", pressed_keys[0], pressed_keys[1], pressed_keys[2],
+    //          pressed_keys[3], pressed_keys[4], pressed_keys[5]);
 
     tud_hid_keyboard_report(HID_ITF_PROTOCOL_KEYBOARD, 0, pressed_keys);
     // vTaskDelay(pdMS_TO_TICKS(50));
     // tud_hid_keyboard_report(HID_ITF_PROTOCOL_KEYBOARD, 0, NULL);
     has_changed = 0;
+}
+
+void copy_buffer(uint8_t * buffer) {
+    for (int i = 0; i < 6; ++i) {
+        if (buffer[i] != pressed_keys[i]) {
+            has_changed = 1;
+        }
+        pressed_keys[i] = buffer[i];
+        if (pressed_keys[i] != 0) {
+            key_index = i;
+        }
+    }
 }

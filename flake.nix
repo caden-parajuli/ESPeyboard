@@ -28,6 +28,18 @@
             # })
             esp-idf-esp32s3
             python312Packages.psutil
+
+            cmake
+
+            cargo
+            rustc
+            rust-analyzer
+
+            libevdev
+            xorg.libX11
+            xorg.libXi
+            xorg.libXtst
+            dbus
           ];
         };
       }
